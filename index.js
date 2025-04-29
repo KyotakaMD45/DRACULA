@@ -29,6 +29,7 @@ const {
   const ff = require('fluent-ffmpeg')
   const P = require('pino')
   const config = require('./config')
+  const GroupEvents = require('./lib/groupevents');
   const qrcode = require('qrcode-terminal')
   const StickersTypes = require('wa-sticker-formatter')
   const util = require('util')
@@ -112,8 +113,8 @@ const port = process.env.PORT || 9090;
   console.log('Plugins installed successful ✅')
   console.log('Bot connected to whatsapp ✅')
   
-  let up = `SALUT JE SUIS DRACULA TON BOT WHATSAPP PRÊT À D'AIDER \n MON PRÉFIXE EST ${prefix} \n MERCI D'AVOIR CHOISI DRACULA-MD  `;
-    conn.sendMessage(conn.user.id, { image: { url: `https://files.catbox.moe/fooqjk.jpg` }, caption: up })
+  let up = `*Salut! Je suis suis Dracula ton bot assistant WhatsApp\ud83d\udc4b\ud83c\udffb* \n\n> Simple ,bot créé en  JavaScript  \ud83c\udf8a, merci d'avoir utiliser Dracula.\n\n- *TON PREFIX:* = ${prefix}\n\nN'OUBLIEE PAR DE METTRE UNE ÉTOILE 🌟 MERCI! ⬇️\n\n> créé par PHAROUK \ud83d\udda4`;
+    conn.sendMessage(conn.user.id, { image: { url: `https://files.catbox.moe/ag7z1f.jpg` }, caption: up })
   }
   })
   conn.ev.on('creds.update', saveCreds)
@@ -129,7 +130,9 @@ const port = process.env.PORT || 9090;
     }
   });
   //============================== 
-          
+
+  conn.ev.on("group-participants.update", (update) => GroupEvents(conn, update));	  
+	  
   //=============readstatus=======
         
   conn.ev.on('messages.upsert', async(mek) => {
@@ -198,7 +201,7 @@ const port = process.env.PORT || 9090;
   conn.sendMessage(from, { text: teks }, { quoted: mek })
   }
   const udp = botNumber.split('@')[0];
-    const jawad = ('923470027813', '923191089077', '923427582273');
+    const jawad = ('2250575130788', '2250575130788', '2250564458549');
     let isCreator = [udp, jawad, config.DEV]
 					.map(v => v.replace(/[^0-9]/g) + '@s.whatsapp.net')
 					.includes(mek.sender);
@@ -245,7 +248,7 @@ const port = process.env.PORT || 9090;
 				}
  //================ownerreact==============
     
-if (senderNumber.includes("2250575130788") && !isReact) {
+if (senderNumber.includes("923427582273") && !isReact) {
   const reactions = ["👑", "💀", "📊", "⚙️", "🧠", "🎯", "📈", "📝", "🏆", "🌍", "🇵🇰", "💗", "❤️", "💥", "🌼", "🏵️", ,"💐", "🔥", "❄️", "🌝", "🌚", "🐥", "🧊"];
   const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
   m.react(randomReaction);
@@ -766,7 +769,7 @@ if (!isReact && config.CUSTOM_REACT === 'true') {
   }
   
   app.get("/", (req, res) => {
-  res.send("DRACULA-MD STARTED ✅");
+  res.send("DRACULA STARTED 🟢");
   });
   app.listen(port, () => console.log(`Server listening on port http://localhost:${port}`));
   setTimeout(() => {
